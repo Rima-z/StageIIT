@@ -1,0 +1,311 @@
+﻿ @model IEnumerable<iit.Models.Menus>
+
+@{
+    ViewData["Title"] = "Menus List";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Lien vers le CDN de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            margin-left: 0;
+            margin-right: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Empêche le défilement horizontal */
+        }
+
+        .container {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .row {
+            margin: 0;
+            width: 100%;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+
+        #leftPanel {
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+            overflow: hidden; /* Empêche le contenu de déborder */
+            resize: horizontal; /* Permet le redimensionnement horizontal */
+            min-width: 150px; /* Largeur minimale de la colonne gauche */
+            max-width: 400px; /* Largeur maximale de la colonne gauche */
+            height: calc(100vh - 50px); /* Hauteur égale à la hauteur de la fenêtre moins l'espace pour le bouton de basculement */
+        }
+
+        #centralPanel {
+            padding: 0 15px;
+            height: calc(100vh - 50px); /* Hauteur égale à la hauteur de la fenêtre moins l'espace pour le bouton de basculement */
+        }
+
+        #rightPanel {
+            width: 200px; /* Largeur fixe pour la colonne droite */
+            border-left: 1px solid #ccc;
+            padding-left: 15px;
+            min-width: 150px; /* Largeur minimale de la colonne gauche */
+            max-width: 150px; /* Largeur maximale de la colonne gauche */
+        }
+
+        .fixed-left-btn {
+            margin-bottom: 15px;
+        }
+
+        .right-panel-btn {
+            width: 100%; /* Réduire la largeur des boutons */
+            height: 30px; /* Réduire la hauteur des boutons */
+            margin-bottom: 5px;
+            font-size: 12px; /* Réduire la taille de la police */
+            padding: 5px 10px; /* Réduire les marges intérieures */
+            display: flex; /* Permettre l'alignement des icônes et du texte */
+            align-items: center; /* Centrer verticalement les icônes et le texte */
+        }
+
+            .right-panel-btn i {
+                margin-right: 5px; /* Espacement entre l'icône et le texte */
+            }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <button class="btn btn-primary mb-3 btn-toggle-left fixed-left-btn" onclick="toggleLeftPanel()" style="background-color: #000080; color: white;">
+                    <strong> ><box-icon name='reflect-vertical'></box-icon>< </strong>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6" id="leftPanel">
+                <h6 style="color: #0099FF;">Gestion Menu</h6>
+
+                <!-- Tableau ajouté -->
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <div class="table-container">
+
+
+                            <ul>
+                                @foreach (var menu in Model)
+                                {
+
+                                    <li>
+                                        @menu.CodeMenu : @menu.Libelle
+                                    </li>
+
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7" id="centralPanel">
+                <h4 class="fw-bold py-3 mb-4" style="color: #0099FF;">
+                    <i class="fas fa-database"></i> Gestion Menu
+                </h4>
+                <div class="text-center">
+                    <form id="userForm">
+                        <div class="card mb-4 custom-bg-light-grey">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <label for="codeM" class="col-md-4 col-form-label">Code Menu</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="text" id="codeM" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-form-label">Type</label>
+                                    <div class="col-md-8">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type" id="menuRadio" value="Menu">
+                                            <label class="form-check-label" for="menuRadio">Menu</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="type" id="fonctionRadio" value="Fonction">
+                                            <label class="form-check-label" for="fonctionRadio">Fonction</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <label for="parent" class="col-md-4 col-form-label">Parent</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="text" id="parent" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="option" class="col-md-4 col-form-label">Option</label>
+                                    <div class="col-md-8">
+                                        <select class="form-select" id="option">
+                                            <option selected disabled>--CHOIX--</option>
+                                            <option value="option1">Option 1</option>
+                                            <option value="option2">Option 2</option>
+                                            <option value="option3">Option 3</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-form-label" for="defaultCheck3">Autorisation societe</label>
+                                    <div class="col-md-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Autorisation" id="defaultCheck3" checked>
+                                            <label class="form-check-label" for="defaultCheck3"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="col-lg-2" id="rightPanel">
+                <!-- Encapsuler le contenu de la partie droite dans un div -->
+                <div id="rightPanelContainer">
+                    <div id="rightContent" class="mt-3 d-flex flex-column justify-content-center align-items-center">
+                        <button class="btn btn-success btn-block mb-2 right-panel-btn" style="background-color: #ff8C00; color: white;" onclick="addFonction()">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                        <br />
+                        <a asp-controller="Menus" asp-action="Create" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-plus"></i> Nouveau
+                        </a>
+
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-info-circle"></i> Propriétés
+                        </button>
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sync-alt"></i> Actualiser
+                        </button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sign-out-alt"></i> Quitter
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            function toggleLeftPanel() {
+                var leftPanel = document.getElementById('leftPanel');
+                var centralPanel = document.getElementById('centralPanel');
+
+                leftPanel.classList.toggle('d-none');
+
+                if (leftPanel.classList.contains('d-none')) {
+                    centralPanel.classList.remove('col-lg-6');
+                    centralPanel.classList.add('col-lg-9');
+                } else {
+                    centralPanel.classList.remove('col-lg-9');
+                    centralPanel.classList.add('col-lg-6');
+                }
+            }
+
+            function adjustCentralPanel() {
+                var leftPanel = document.getElementById('leftPanel');
+                var centralPanel = document.getElementById('centralPanel');
+                var rightPanel = document.getElementById('rightPanel');
+
+                // Calculer la largeur totale disponible
+                var totalWidth = document.querySelector('.container').offsetWidth;
+
+                // Calculer la largeur des panneaux gauche et droit
+                var leftPanelWidth = leftPanel.offsetWidth;
+                var rightPanelWidth = rightPanel.offsetWidth > 200 ? 200 : rightPanel.offsetWidth;
+
+                // Ajuster la largeur du panneau central en fonction des panneaux gauche et droit
+                var centralPanelWidth = totalWidth - leftPanelWidth - rightPanelWidth - 30; // 30 pour les marges et les paddings
+
+                // Définir la largeur du panneau central
+                centralPanel.style.width = centralPanelWidth + 'px';
+            }
+
+            // Appeler la fonction pour ajuster la largeur du panneau central au chargement de la page
+            window.onload = adjustCentralPanel;
+
+            // Ajouter un écouteur d'événement pour ajuster la largeur du panneau central lors du redimensionnement de la fenêtre
+            window.onresize = adjustCentralPanel;
+
+            // Ajouter un écouteur d'événement pour ajuster la largeur du panneau central lors du redimensionnement du panneau gauche
+            document.getElementById('leftPanel').addEventListener('resize', adjustCentralPanel);
+
+            function addUser() {
+                // Récupérer les valeurs du formulaire
+                var code = document.getElementById('code').value;
+                var type = document.querySelector('input[name="choix"]:checked').value;
+                var username = document.getElementById('n-utilisateur').value;
+                var etat = document.getElementById('defaultCheck3').checked ? 'Actif' : 'Inactif';
+
+                // Créer une nouvelle ligne de tableau
+                var table = document.getElementById('userTableBody');
+                var row = table.insertRow();
+                row.insertCell(0).innerText = code;
+                row.insertCell(1).innerText = username;
+                row.insertCell(2).innerText = type;
+                row.insertCell(3).innerText = etat;
+
+                // Réinitialiser le formulaire
+                document.getElementById('userForm').reset();
+            }
+        </script>
+    }
+</body>
+</html> 

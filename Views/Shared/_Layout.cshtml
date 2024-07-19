@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - iit</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/iit.styles.css" asp-append-version="true" />
+    <style>
+        .navbar-custom {
+            background-color: #000080 !important; /* Blue background */
+        }
+
+            .navbar-custom .navbar-nav .nav-link,
+            .navbar-custom .navbar-brand,
+            .navbar-custom .dropdown-toggle {
+                color: white !important; /* White text */
+            }
+
+                .navbar-custom .navbar-brand img {
+                    filter: brightness(0) invert(1); /* White image */
+                }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/css/img/Logo_sopal.png" width="150" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Données de bases" asp-action="Index">Données de base</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownParametres" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Paramétrage utilisateurs
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownParametres">
+                                <li><a class="dropdown-item" asp-controller="Fonction" asp-action="Index">Fonction</a></li>
+                                <li><a class="dropdown-item" asp-controller="ProfilFonction" asp-action="Index">Profil fonction</a></li>
+                                <li><a class="dropdown-item" asp-controller="Menus" asp-action="Index">Menu</a></li>
+                                <li><a class="dropdown-item" asp-controller="ProfilMenu" asp-action="Index">Profil Menu</a></li>
+                                <li><a class="dropdown-item" asp-controller="Utilisateur" asp-action="Index">Gestion utilisateurs</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUtilisateur" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUtilisateur">
+                                <li><a class="dropdown-item" asp-controller="Utilisateur" asp-action="Login">Déconnexion</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

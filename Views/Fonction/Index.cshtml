@@ -1,0 +1,291 @@
+﻿@model IEnumerable<iit.Models.Fonction>
+
+@{
+    ViewData["Title"] = "Fonction List";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .row {
+            margin: 0;
+            width: 100%;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+
+        #leftPanel {
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+            overflow: hidden;
+            resize: horizontal;
+            min-width: 150px;
+            max-width: 400px;
+            height: calc(100vh - 50px);
+        }
+
+        #centralPanel {
+            padding: 0 15px;
+            height: calc(100vh - 50px);
+        }
+
+        #rightPanel {
+            width: 200px;
+            border-left: 1px solid #ccc;
+            padding-left: 15px;
+            min-width: 150px;
+            max-width: 150px;
+        }
+
+        .fixed-left-btn {
+            margin-bottom: 15px;
+        }
+
+        .right-panel-btn {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 5px;
+            font-size: 12px;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+        }
+
+            .right-panel-btn i {
+                margin-right: 5px;
+            }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <button class="btn btn-primary mb-3 btn-toggle-left fixed-left-btn" onclick="toggleLeftPanel()" style="background-color: #000080; color: white;">
+                    <strong> ><box-icon name='reflect-vertical'></box-icon>< </strong>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6" id="leftPanel">
+                <h6 style="color: #0099FF;">Gestion Fonction</h6>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <div class="table-container">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>CodeF</th>
+                                        <th>Libelle</th>
+                                        <th>Link</th>
+                                        <th>Option</th>
+                                        <th>Autorisation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cat in Model)
+                                    {
+                                        <tr>
+                                            <td>@cat.CodeF</td>
+                                            <td>@cat.Libelle</td>
+                                            <td>@cat.Link</td>
+                                            <td>@cat.Options</td>
+                                            <td>@cat.Autorisation</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7" id="centralPanel">
+                <h4 class="fw-bold py-3 mb-4" style="color: #0099FF;">
+                    <i class="fas fa-database"></i> Gestion Fonction
+                </h4>
+                <div class="text-center">
+                    <form id="userForm">
+                        <div class="card mb-4 custom-bg-light-grey">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <label for="codeF" class="col-md-4 col-form-label">Code Fonction</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="text" id="codeF" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <label for="libelle" class="col-md-4 col-form-label">Libelle</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="text" id="libelle" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="link" class="col-md-4 col-form-label">Link</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="text" id="link" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="option" class="col-md-4 col-form-label">Options</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="text" id="option" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-form-label" for="defaultCheck3">Autorisation societe</label>
+                                    <div class="col-md-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="Autorisation" id="defaultCheck3">
+                                            <label class="form-check-label" for="defaultCheck3"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-2" id="rightPanel">
+                <div id="rightPanelContainer">
+                    <div id="rightContent" class="mt-3 d-flex flex-column justify-content-center align-items-center">
+                        <button class="btn btn-success btn-block mb-2 right-panel-btn" style="background-color: #ff8C00; color: white;" onclick="addFonction()">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                        <br />
+                        <a asp-controller="Fonction" asp-action="Create" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-plus"></i> Nouveau
+                        </a>
+
+                        <button class="btn btn-block mb-2 right-panel-btn" onclick="deleteSelectedFunction()" style="background-color: #000080; color: white;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-info-circle"></i> Propriétés
+                        </button>
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sync-alt"></i> Actualiser
+                        </button>
+
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sign-out-alt"></i> Quitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleLeftPanel() {
+            const leftPanel = document.getElementById('leftPanel');
+            if (leftPanel.style.display === 'none') {
+                leftPanel.style.display = 'block';
+            } else {
+                leftPanel.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(function (row) {
+                row.addEventListener('click', function () {
+                    const codeF = this.cells[0].innerText;
+                    const libelle = this.cells[1].innerText;
+                    const link = this.cells[2].innerText;
+                    const option = this.cells[3].innerText;
+                    const autorisation = this.cells[4].innerText;
+                    loadFormData(codeF, libelle, link, option, autorisation);
+                });
+            });
+        });
+
+        function loadFormData(codeF, libelle, link, option, autorisation) {
+            document.getElementById('codeF').value = codeF;
+            document.getElementById('libelle').value = libelle;
+            document.getElementById('link').value = link;
+            document.getElementById('option').value = option;
+
+            // Vérifiez la valeur de autorisation et ajustez en conséquence
+            if (autorisation.trim() === '1' || autorisation.trim().toLowerCase() === 'yes' || autorisation.trim().toLowerCase() === 'true') {
+                document.getElementById('defaultCheck3').checked = true;
+            } else {
+                document.getElementById('defaultCheck3').checked = false;
+            }
+        }
+
+
+        function deleteSelectedFunction() {
+            const codeF = document.getElementById('codeF').value;
+            if (codeF === "") {
+                alert("Please select a row to delete.");
+                return;
+            }
+            if (confirm("Are you sure you want to delete this fonction?")) {
+                window.location.href = '/Fonction/Delete/' + codeF;
+            }
+        }
+
+
+
+
+    </script>
+</body>
+</html>

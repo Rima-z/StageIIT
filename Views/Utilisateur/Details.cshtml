@@ -1,0 +1,79 @@
+﻿@*  @model iit.Models.Utilisateur
+
+@{
+    ViewData["Title"] = "Details Utilisateur";
+}
+
+<h2>Details Utilisateur</h2>
+
+<div>
+    <h4>Utilisateur</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CODUSR)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CODUSR)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Etat)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Etat)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomPrenom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomPrenom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Menu)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Menu)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fonction)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fonction)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Charge)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Charge)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Actif)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Actif)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CODUSR">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@

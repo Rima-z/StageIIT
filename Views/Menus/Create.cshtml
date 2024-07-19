@@ -1,0 +1,69 @@
+﻿@model iit.Models.Menus
+
+@{
+    ViewData["Title"] = "Créer Nouvelle Menu";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Lien vers le CDN de Font Awesome et Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Votre style CSS personnalisé ici */
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Créer Nouvelle Menu</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div class="form-group">
+                        <label asp-for="CodeMenu" class="control-label">Code Menu</label>
+                        <input asp-for="CodeMenu" class="form-control" />
+                        <span asp-validation-for="CodeMenu" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Type" class="control-label">Type</label>
+                        <div>
+                            <input type="radio" asp-for="Type" value="Menu" id="type-menu" />
+                            <label for="type-menu">Menu</label>
+                        </div>
+                        <div>
+                            <input type="radio" asp-for="Type" value="Fonction" id="type-fonction" />
+                            <label for="type-fonction">Fonction</label>
+                        </div>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Parent" class="control-label">Parent</label>
+                        <input asp-for="Parent" class="form-control" />
+                        <span asp-validation-for="Parent" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Libelle" class="control-label">Libelle</label>
+                        <input asp-for="Libelle" class="form-control" />
+                        <span asp-validation-for="Libelle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Rang" class="control-label">Rang</label>
+                        <input asp-for="Rang" class="form-control" />
+                        <span asp-validation-for="Rang" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: #000080; border-color: #000080;">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

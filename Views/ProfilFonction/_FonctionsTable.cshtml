@@ -1,0 +1,19 @@
+﻿@model IEnumerable<YourNamespace.Models.Fonction>
+
+<table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Fonction</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var fonction in Model)
+        {
+            <tr>
+                <td>@fonction.Libelle</td>
+                <td>@fonction.Options</td>
+            </tr>
+        }
+    </tbody>
+</table>

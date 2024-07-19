@@ -1,0 +1,250 @@
+﻿ @{
+    ViewData["Title"] = "Profil Menu";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Lien vers le CDN de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            margin-left: 0;
+            margin-right: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Empêche le défilement horizontal */
+        }
+
+        .container {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .row {
+            margin: 0;
+            width: 100%;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+
+        #leftPanel {
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+            overflow: hidden; /* Empêche le contenu de déborder */
+            resize: horizontal; /* Permet le redimensionnement horizontal */
+            min-width: 150px; /* Largeur minimale de la colonne gauche */
+            max-width: 400px; /* Largeur maximale de la colonne gauche */
+            height: calc(100vh - 50px); /* Hauteur égale à la hauteur de la fenêtre moins l'espace pour le bouton de basculement */
+        }
+
+        #centralPanel {
+            padding: 0 15px;
+            height: calc(100vh - 50px); /* Hauteur égale à la hauteur de la fenêtre moins l'espace pour le bouton de basculement */
+        }
+
+        #rightPanel {
+            width: 200px; /* Largeur fixe pour la colonne droite */
+            border-left: 1px solid #ccc;
+            padding-left: 15px;
+            min-width: 150px; /* Largeur minimale de la colonne gauche */
+            max-width: 150px; /* Largeur maximale de la colonne gauche */
+        }
+
+        .fixed-left-btn {
+            margin-bottom: 15px;
+        }
+
+        .right-panel-btn {
+            width: 100%; /* Réduire la largeur des boutons */
+            height: 30px; /* Réduire la hauteur des boutons */
+            margin-bottom: 5px;
+            font-size: 12px; /* Réduire la taille de la police */
+            padding: 5px 10px; /* Réduire les marges intérieures */
+            display: flex; /* Permettre l'alignement des icônes et du texte */
+            align-items: center; /* Centrer verticalement les icônes et le texte */
+        }
+
+            .right-panel-btn i {
+                margin-right: 5px; /* Espacement entre l'icône et le texte */
+            }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <button class="btn btn-primary mb-3 btn-toggle-left fixed-left-btn" onclick="toggleLeftPanel()" style="background-color: #000080; color: white;">
+                    <strong> ><box-icon name='reflect-vertical'></box-icon>< </strong>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6" id="leftPanel">
+                <h6 style="color: #0099FF;">Gestion Profil Menu</h6>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <div class="table-container">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            CodePrm
+                                        </th>
+                                        <th>
+                                            Libelle
+                                        </th>
+                                        <th>
+                                            Menu
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cat in Model)
+                                    {
+                                        <tr onclick="loadUserData('@cat.CodPrm', '@cat.Libelle')">
+                                            <td width="30%">
+                                                @cat.CodPrm
+                                            </td>
+                                            <td width="50%">
+                                                @cat.Libelle
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6" id="centralPanel">
+                <h4 class="fw-bold py-3 mb-4" style="color: #0099FF;">
+                    <i class="fas fa-database"></i> Gestion Profil Menu
+                </h4>
+                <form id="profilMenuForm" method="post" action="/ProfilMenu/Update">
+                    <div class="card mb-4 custom-bg-light-grey">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <label for="codPrm" class="col-md-4 col-form-label">Code Prm</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="codPrm" name="codPrm" readonly />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="labelle" class="col-md-4 col-form-label">Libelle</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="labelle" name="labelle" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="menuContainer">
+                    <!-- Les menus seront chargés ici -->
+                </div>
+
+
+
+            </div>
+
+            <div class="col-lg-2" id="rightPanel">
+                <div id="rightPanelContainer">
+                    <div id="rightContent" class="mt-3 d-flex flex-column justify-content-center align-items-center">
+                        <button class="btn btn-success btn-block mb-2 right-panel-btn" style="background-color: #ff8C00; color: white;" onclick="submitForm()">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                        <br />
+                        <a asp-controller="ProfilMenu" asp-action="Create" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-plus"></i> Nouveau
+                        </a>
+                        <button class="btn btn-block mb-2 right-panel-btn" onclick="deleteSelectedProfilMenu()" style="background-color: #000080; color: white;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-info-circle"></i> Propriétés
+                        </button>
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sync-alt"></i> Actualiser
+                        </button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sign-out-alt"></i> Quitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function toggleLeftPanel() {
+            const leftPanel = document.getElementById('leftPanel');
+            if (leftPanel.style.display === 'none') {
+                leftPanel.style.display = 'block';
+            } else {
+                leftPanel.style.display = 'none';
+            }
+        }
+
+        function loadUserData(codPrm, libelle) {
+            $('#codPrm').val(codPrm);
+            $('#labelle').val(libelle);
+
+            $.get('/ProfilMenu/GetMenus', { codPrm: codPrm }, function (data) {
+                $('#menuContainer').html(data);
+            });
+        }
+
+        function submitForm() {
+            $('#profilMenuForm').submit();
+        }
+
+        function deleteSelectedProfilMenu() {
+            const codPrm = $('#codPrm').val();
+            if (codPrm) {
+                window.location.href = '/ProfilMenu/Delete/' + codPrm;
+            }
+        }
+    </script>
+</body>
+</html> 
+
+
+

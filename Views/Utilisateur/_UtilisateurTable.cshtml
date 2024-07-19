@@ -1,0 +1,29 @@
+﻿@model IEnumerable<iit.Models.Utilisateur>
+
+<table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>CodUsr</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Type</th>
+            <th>CodPrm</th>
+            <th>CodPrf</th>
+            <th>Etat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var utilisateur in Model)
+        {
+            <tr onclick="loadUserData('@utilisateur.CodUsr', '@utilisateur.Username', '@utilisateur.Password', '@utilisateur.Type', '@utilisateur.CodPrm', '@utilisateur.CodPrf', '@utilisateur.Active')">
+                <td>@utilisateur.CodUsr</td>
+                <td>@utilisateur.Username</td>
+                <td>@utilisateur.Password</td>
+                <td>@utilisateur.Type</td>
+                <td>@utilisateur.CodPrm</td>
+                <td>@utilisateur.CodPrf</td>
+                <td>@utilisateur.Active</td>
+            </tr>
+        }
+    </tbody>
+</table>

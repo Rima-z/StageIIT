@@ -1,0 +1,54 @@
+﻿@model iit.Models.ProfilFonction
+
+@{
+    ViewData["Title"] = "Créer un ProfilFonction";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Lien vers le CDN de Bootstrap et Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+
+        label {
+            margin-right: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2>Créer un ProfilFonction</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div class="form-group">
+                        <label asp-for="CodPrf" class="control-label">Code Prf</label>
+                        <input asp-for="CodPrf" class="form-control" />
+                        <span asp-validation-for="CodPrf" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Libelle" class="control-label">Libelle</label>
+                        <input asp-for="Libelle" class="form-control" />
+                        <span asp-validation-for="Libelle" class="text-danger"></span>
+                    </div>
+                   
+                    <button type="submit" class="btn btn-primary" style="background-color: #000080; border-color: #000080;">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lien vers le CDN de Bootstrap JS et jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

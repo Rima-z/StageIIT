@@ -1,0 +1,91 @@
+﻿@model iit.Models.Utilisateur
+
+@{
+    ViewData["Title"] = "Créer un Utilisateur";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Lien vers le CDN de Bootstrap et Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        label {
+            margin-right: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2>Créer un Utilisateur</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div class="form-group">
+                        <label asp-for="CodUsr" class="control-label">Code Utilisateur</label>
+                        <input asp-for="CodUsr" class="form-control" />
+                        <span asp-validation-for="CodUsr" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label">Username</label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Password</label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Type" class="control-label">Type</label>
+                        <div>
+                            <input type="radio" asp-for="Type" value="AD" id="type-ad" />
+                            <label for="type-ad">AD</label>
+                        </div>
+                        <div>
+                            <input type="radio" asp-for="Type" value="Standard" id="type-standard" />
+                            <label for="type-standard">Standard</label>
+                        </div>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CodPrm" class="control-label">CodPrm</label>
+                        <input asp-for="CodPrm" class="form-control" />
+                        <span asp-validation-for="CodPrm" class="text-danger"></span>
+                    </div> 
+                   
+                    <div class="form-group">
+                        <label asp-for="CodPrf" class="control-label">CodPrf</label>
+                        <input asp-for="CodPrf" class="form-control" />
+                        <span asp-validation-for="CodPrf" class="text-danger"></span>
+                    </div> 
+                  
+
+                    <div class="form-group">
+                        <label asp-for="Active" class="control-label">Active</label>
+                        <input asp-for="Active" type="checkbox" />
+                        <span asp-validation-for="Active" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: #000080; border-color: #000080;">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lien vers le CDN de Bootstrap JS et jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

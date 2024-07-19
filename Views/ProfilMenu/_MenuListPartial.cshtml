@@ -1,0 +1,27 @@
+﻿@model IEnumerable<iit.Models.Menus>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Code Menu</th>
+                <th>Type</th>
+                <th>Parent</th>
+                <th>Libelle</th>
+                <th>Rang</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var menu in Model)
+            {
+                <tr>
+                    <td>@menu.CodeMenu</td>
+                    <td>@menu.Type</td>
+                    <td>@menu.Parent</td>
+                    <td>@menu.Libelle</td>
+                    <td>@menu.Rang</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

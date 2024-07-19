@@ -1,0 +1,128 @@
+﻿@model iit.Models.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/LayoutMinimal.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/css/img/photo.jpg'); /* Chemin vers votre image de fond */
+            background-size: cover; /* Ajustement de la taille de l'image à la fenêtre */
+            background-position: center; /* Centrage de l'image */
+            color: #fff; /* Couleur du texte */
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 50px 0 50px 50px; /* Ajustement du margin pour aligner à gauche */
+            padding: 30px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #495057; /* Couleur du texte */
+        }
+
+            .form-container h2 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #000080;
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #495057;
+            }
+
+        .form-control {
+            width: calc(100% - 25px); /* Ajustement de la largeur pour tenir compte du padding */
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+            .form-control:focus {
+                border-color: #000080;
+                outline: 0;
+                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #000080;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+            .btn-primary:hover {
+                background-color: #000080;
+            }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 14px;
+        }
+
+        .form-group-icon {
+            position: relative;
+        }
+
+            .form-group-icon input {
+                padding-left: 35px; /* Ajustement pour les icônes */
+            }
+
+            .form-group-icon .icon {
+                position: absolute;
+                top: 50%;
+                left: 10px;
+                transform: translateY(-50%);
+                font-size: 16px;
+                color: #007bff;
+            }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Connexion</h2>
+        <form asp-action="Login" method="post">
+            <div class="form-group">
+                <label asp-for="Username">Nom d'utilisateur</label>
+                <input asp-for="Username" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Mot de passe</label>
+                <input asp-for="Password" type="password" class="form-control" />
+            </div>
+            <div class="form-group">
+                <a asp-controller="Utilisateur" asp-action="Register">Inscription</a>
+            </div>
+            <button type="submit" class="btn btn-primary">Connexion</button>
+        </form>
+    </div>
+
+    <!-- Inclure FontAwesome pour les icônes -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+﻿@model IEnumerable<iit.Models.Utilisateur>
+
+@{
+    ViewData["Title"] = "Utilisateur List";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Lien vers le CDN de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Empêche le défilement horizontal */
+        }
+
+        .container {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .row {
+            margin: 0;
+            width: 100%;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+
+        #leftPanel {
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+            overflow: hidden; /* Empêche le contenu de déborder */
+            resize: horizontal; /* Permet le redimensionnement horizontal */
+            min-width: 150px; /* Largeur minimale de la colonne gauche */
+            max-width: 400px; /* Largeur maximale de la colonne gauche */
+            height: calc(100vh - 50px); /* Hauteur égale à la hauteur de la fenêtre moins l'espace pour le bouton de basculement */
+        }
+
+        #centralPanel {
+            padding: 0 15px;
+            height: calc(100vh - 50px); /* Hauteur égale à la hauteur de la fenêtre moins l'espace pour le bouton de basculement */
+        }
+
+        #rightPanel {
+            width: 200px; /* Largeur fixe pour la colonne droite */
+            border-left: 1px solid #ccc;
+            padding-left: 15px;
+            min-width: 150px; /* Largeur minimale de la colonne gauche */
+            max-width: 150px; /* Largeur maximale de la colonne gauche */
+        }
+
+        .fixed-left-btn {
+            margin-bottom: 15px;
+        }
+
+        .right-panel-btn {
+            width: 100%; /* Réduire la largeur des boutons */
+            height: 30px; /* Réduire la hauteur des boutons */
+            margin-bottom: 5px;
+            font-size: 12px; /* Réduire la taille de la police */
+            padding: 5px 10px; /* Réduire les marges intérieures */
+            display: flex; /* Permettre l'alignement des icônes et du texte */
+            align-items: center; /* Centrer verticalement les icônes et le texte */
+        }
+
+            .right-panel-btn i {
+                margin-right: 5px; /* Espacement entre l'icône et le texte */
+            }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .custom-bg-light-grey {
+            background-color: #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <button class="btn btn-primary mb-3 btn-toggle-left fixed-left-btn" onclick="toggleLeftPanel()" style="background-color: #000080; color: white;">
+                    <strong> ><box-icon name='reflect-vertical'></box-icon>< </strong>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3" id="leftPanel">
+                <h6 style="color: #0099FF;">Gestion Utilisateur</h6>
+
+                <!-- Tableau ajouté -->
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        <div class="table-container">
+                            <input type="text" id="searchCodUsr" placeholder="Rechercher par CodUsr" class="form-control" style="width:200px; margin-bottom: 10px;">
+
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>CodUsr</th>
+                                        <th>Username</th>
+                                        <th>Password</th>
+                                        <th>Type</th>
+                                        <th>CodPrm</th>
+                                        <th>CodPrf</th>
+                                        <th>Etat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userTableBody">
+                                    @foreach (var utilisateur in Model)
+                                    {
+                                        <tr onclick="loadUserData('@utilisateur.CodUsr', '@utilisateur.Username', '@utilisateur.Password', '@utilisateur.Type', '@utilisateur.CodPrm', '@utilisateur.CodPrf', '@utilisateur.Active')">
+                                            <td>@utilisateur.CodUsr</td>
+                                            <td>@utilisateur.Username</td>
+                                            <td>@utilisateur.Password</td>
+                                            <td>@utilisateur.Type</td>
+                                            <td>@utilisateur.CodPrm</td>
+                                            <td>@utilisateur.CodPrf</td>
+                                            <td>@utilisateur.Active</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7" id="centralPanel">
+                <h4 class="fw-bold py-3 mb-4" style="color: #0099FF;">
+                    <i class="fas fa-database"></i> Gestion Utilisateur
+                </h4>
+                <div class="text-center">
+                    <form id="utilisateurForm">
+                        <div class="card mb-4 custom-bg-light-grey">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <label for="CodUsr" class="col-md-4 col-form-label">Code Utilisateur</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="CodUsr" name="CodUsr" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <label for="Username" class="col-md-4 col-form-label">Nom d'utilisateur</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="Username" name="Username" required />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Password" class="col-md-4 col-form-label">Mot de passe</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="Password" name="Password" required />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Type" class="col-md-4 col-form-label">Type</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="Type" name="Type" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="CodPrm" class="col-md-4 col-form-label">Code Prm</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="CodPrm" name="CodPrm" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="CodPrf" class="col-md-4 col-form-label">Code Prf</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="CodPrf" name="CodPrf" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Active" class="col-md-4 col-form-label">Actif</label>
+                                    <div class="col-md-8">
+                                        <input type="checkbox" id="Active" name="Active" class="form-check-input" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                       
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-2" id="rightPanel">
+                <!-- Encapsuler le contenu de la partie droite dans un div -->
+                <div id="rightPanelContainer">
+                    <div id="rightContent" class="mt-3 d-flex flex-column justify-content-center align-items-center">
+                        <button class="btn btn-success btn-block mb-2 right-panel-btn" style="background-color: #ff8C00; color: white;" id="saveUtilisateur">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                       
+                        <br />
+                        <a asp-controller="Utilisateur" asp-action="Create" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-plus"></i> Nouveau
+                        </a>
+
+                        <button class="btn btn-block mb-2 right-panel-btn" onclick="deleteSelectedUtilisateur()" style="background-color: #000080; color: white;">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-info-circle"></i> Propriétés
+                        </button>
+                        <button class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sync-alt"></i> Actualiser
+                        </button>
+
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-block mb-2 right-panel-btn" style="background-color: #000080; color: white;">
+                            <i class="fas fa-sign-out-alt"></i> Quitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Fonction pour remplir les champs du formulaire
+        function loadUserData(codUsr, username, password, type, codPrm, codPrf, active) {
+            document.getElementById('CodUsr').value = codUsr;
+            document.getElementById('Username').value = username;
+            document.getElementById('Password').value = password;
+            document.getElementById('Type').value = type;
+            document.getElementById('CodPrm').value = codPrm;
+            document.getElementById('CodPrf').value = codPrf;
+            document.getElementById('Active').checked = active === 'True';
+        }
+
+        // Ajout d'un nouvel utilisateur via une requête AJAX
+        document.getElementById('saveUtilisateur').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            var utilisateur = {
+                CodUsr: document.getElementById('CodUsr').value,
+                Username: document.getElementById('Username').value,
+                Password: document.getElementById('Password').value,
+                Type: document.getElementById('Type').value,
+                CodPrm: document.getElementById('CodPrm').value,
+                CodPrf: document.getElementById('CodPrf').value,
+                Active: document.getElementById('Active').checked
+            };
+
+            $.ajax({
+                url: '/Utilisateur/Create',
+                type: 'POST',
+                data: JSON.stringify(utilisateur),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    alert('Utilisateur ajouté avec succès.');
+                    location.reload(); // Recharger la page pour refléter les changements
+                },
+                error: function () {
+                    alert('Erreur lors de l\'ajout de l\'utilisateur.');
+                }
+            });
+        });
+
+        // Highlight selected table row and fill form with its data
+        $('table tbody tr').click(function () {
+            $('table tbody tr').removeClass('selected');
+            $(this).addClass('selected');
+
+            var row = $(this);
+            loadUserData(row.find('td:eq(0)').text(), row.find('td:eq(1)').text(), row.find('td:eq(2)').text(), row.find('td:eq(3)').text(), row.find('td:eq(4)').text(), row.find('td:eq(5)').text(), row.find('td:eq(6)').text());
+        });
+
+        // Fonction pour afficher une alerte pour l'ajout
+        function createNewEntry() {
+            alert('Ajout d\'un nouvel utilisateur.');
+            // Logique pour ajouter un nouvel utilisateur ici
+        }
+
+        // Fonction pour afficher une alerte pour la modification
+        function updateEntry() {
+            alert('Modification de l\'utilisateur.');
+            // Logique pour modifier l'utilisateur ici
+        }
+
+ 
+        // Fonction pour afficher une alerte pour la suppression
+        function deleteSelectedUtilisateur() {
+            const CodUsr = document.getElementById('CodUsr').value;
+            if (CodUsr === "") {
+                alert("Please select a row to delete.");
+                return;
+            }
+            if (confirm("Are you sure you want to delete this fonction?")) {
+                window.location.href = '/Utilisateur/Delete/' + CodUsr;
+            }
+        }
+
+        // Highlight selected table row and fill form with its data
+        $('table tbody tr').click(function () {
+            $('table tbody tr').removeClass('selected');
+            $(this).addClass('selected');
+
+            var row = $(this);
+            loadUserData(row.find('td:eq(0)').text(), row.find('td:eq(1)').text(), row.find('td:eq(2)').text(), row.find('td:eq(3)').text(), row.find('td:eq(4)').text(), row.find('td:eq(5)').text(), row.find('td:eq(6)').text());
+        });
+
+
+        // Fonction pour basculer l'affichage du panneau gauche
+        function toggleLeftPanel() {
+            var leftPanel = document.getElementById('leftPanel');
+            if (leftPanel.style.display === 'none') {
+                leftPanel.style.display = 'block';
+            } else {
+                leftPanel.style.display = 'none';
+            }
+        }
+       
+        document.addEventListener('DOMContentLoaded', function () {
+            var searchInput = document.getElementById('searchCodUsr');
+            searchInput.addEventListener('keyup', function () {
+                var searchTerm = searchInput.value.toLowerCase();
+                var tableRows = document.querySelectorAll('#userTableBody tr');
+
+                tableRows.forEach(function (row) {
+                    var codUsr = row.cells[0].innerText.toLowerCase(); // Colonne CodUsr
+                    if (codUsr.includes(searchTerm)) {
+                        row.style.display = ''; // Afficher la ligne si elle correspond
+                    } else {
+                        row.style.display = 'none'; // Cacher la ligne si elle ne correspond pas
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
